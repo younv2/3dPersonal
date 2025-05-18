@@ -21,6 +21,10 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+    private void Start()
+    {
+        inputHandler.onJumpAction += Jump;
+    }
     private void FixedUpdate()
     {
         moveInput = inputHandler.MoveInput;
@@ -49,5 +53,9 @@ public class PlayerController : MonoBehaviour
         CameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+    }
+    public void Jump()
+    {
+        rb.AddForce(Vector3.up * 5f,ForceMode.Impulse);
     }
 }

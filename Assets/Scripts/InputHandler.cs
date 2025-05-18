@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class InputHandler : MonoBehaviour
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
 
+    public Action onJumpAction;
     private void Awake()
     {
         inputActions = new PlayerInput();
@@ -19,6 +21,7 @@ public class InputHandler : MonoBehaviour
         inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled += OnLook;
+        inputActions.Player.Jump.performed += OnJump;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -35,5 +38,10 @@ public class InputHandler : MonoBehaviour
             LookInput = context.ReadValue<Vector2>();
         else if (context.canceled)
             LookInput = Vector2.zero;
+    }
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            onJumpAction?.Invoke();
     }
 }
