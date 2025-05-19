@@ -8,7 +8,7 @@ public class InputHandler : MonoBehaviour
 
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
-
+    public bool IsSprint { get; private set; }
     public Action onJumpAction;
     private void Awake()
     {
@@ -21,6 +21,8 @@ public class InputHandler : MonoBehaviour
         inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled += OnLook;
+        inputActions.Player.Sprint.performed += OnSprint;
+        inputActions.Player.Sprint.canceled += OnSprint;
         inputActions.Player.Jump.performed += OnJump;
     }
 
@@ -43,5 +45,12 @@ public class InputHandler : MonoBehaviour
     {
         if (context.performed)
             onJumpAction?.Invoke();
+    }
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            IsSprint = true;
+        if (context.canceled)
+            IsSprint = false;
     }
 }

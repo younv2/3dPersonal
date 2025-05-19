@@ -1,9 +1,9 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
     private Vector2 moveInput;
 
     [Header("Look")]
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float lookSensitivity;
     private Vector2 mouseDelta;
 
+    private PlayerStat stat;
     private Rigidbody rb;
     [SerializeField] private InputHandler inputHandler;
 
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
         Vector3 dir = transform.forward * moveInput.y + transform.right * moveInput.x;
-        dir *= moveSpeed;
+        dir *= stat.MoveSpeed;
         dir.y = rb.velocity.y;
 
         rb.velocity = dir;
@@ -57,5 +58,10 @@ public class PlayerController : MonoBehaviour
     public void Jump()
     {
         rb.AddForce(Vector3.up * 5f,ForceMode.Impulse);
+    }
+
+    internal void Init(PlayerStat playerStat)
+    {
+        stat = playerStat;
     }
 }
