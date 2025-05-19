@@ -5,7 +5,6 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     private Vector2 moveInput;
-
     [Header("Look")]
     public Transform CameraContainer;
     public float minXLook;
@@ -16,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private PlayerStat stat;
     private Rigidbody rb;
+    [SerializeField] private Transform groundCheck;
     [SerializeField] private InputHandler inputHandler;
 
     private void Awake()
@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         if (moveInput == Vector2.zero)
             return;
         Move();
+        stat.RecoveryStamina(0.02f);
     }
     private void LateUpdate()
     {
@@ -42,9 +43,9 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
         Vector3 dir = transform.forward * moveInput.y + transform.right * moveInput.x;
-        dir *= stat.MoveSpeed;
+        
+        dir *= (inputHandler.IsSprint && stat.SpendStamina(1f)) ? stat.RunSpeed : stat.MoveSpeed;
         dir.y = rb.velocity.y;
-
         rb.velocity = dir;
     }
     public void CameraLook()
@@ -55,9 +56,17 @@ public class PlayerController : MonoBehaviour
 
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
+    
+
     public void Jump()
     {
-        rb.AddForce(Vector3.up * 5f,ForceMode.Impulse);
+        if (!Physics.CheckSphere(groundCheck.position, 0.2f, LayerMask.GetMask("Ground")))
+            return;
+
+        if (!stat.SpendStamina(5f))
+            return;
+
+        rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
     }
 
     internal void Init(PlayerStat playerStat)

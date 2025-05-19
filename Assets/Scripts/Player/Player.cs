@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private PlayerController controller;
-    private PlayerStat playerStat = new();
-
+    private PlayerStat stat = new();
     private void Awake()
     {
         CharacterManager.Instance.player = this;
@@ -14,6 +11,12 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        controller.Init(playerStat);
+        controller.Init(stat);
+        stat.OnHpChanged += (ctx) => UIManager.Instance.HpBar.SetValue(ctx);
+        stat.OnStaminaChanged += (ctx) => UIManager.Instance.StaminaBar.SetValue(ctx);
+    }
+    private void Update()
+    {
+        stat.SpendHp(0.01f);
     }
 }
