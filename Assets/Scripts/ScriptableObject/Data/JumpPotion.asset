@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b57099cefe9704389095e1c0c87179, type: 3}
+  m_Name: JumpPotion
+  m_EditorClassIdentifier: 
+  displayName: "\uC810\uD504 \uD3EC\uC158"
+  description: "\uC810\uD504 \uD55C\uBC88\uB354!"
+  type: 1
+  icon: {fileID: 21300000, guid: 43046426625693b41b1c2ee199d4c15a, type: 3}
+  dropPrefab: {fileID: 4810300291565418573, guid: 7b149a894b3855d4aaf973ec8095e788, type: 3}
+  canStack: 1
+  maxStackAmount: 64
+  consumables:
+  - isImmediately: 0
+    time: 10
+    type: 3
+    value: 1

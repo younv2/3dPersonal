@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private PlayerController controller;
-    private PlayerStat stat = new();
+    public PlayerController controller;
+    public PlayerStat stat = new();
+    public Equipment equip;
+    public ItemData itemData;
+    public Action OnAddItem;
+
+    public Transform dropPosition;
     private void Awake()
     {
         CharacterManager.Instance.player = this;
         controller = GetComponent<PlayerController>();
+        equip = GetComponent<Equipment>();
     }
     private void Start()
     {

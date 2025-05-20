@@ -5,6 +5,6 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     protected override void Awake()
     {
         base.Awake();
-
+        
     }
 }

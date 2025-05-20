@@ -10,12 +10,14 @@ public class InputHandler : MonoBehaviour
     public Vector2 LookInput { get; private set; }
     public bool IsSprint { get; private set; }
     public Action onJumpAction;
+    public Action onInteractionAction;
+    public Action onInventoryAction;
     private void Awake()
     {
         inputActions = new PlayerInput();
         inputActions.Enable();
     }
-    void Start()
+    void OnEnable()
     {
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
@@ -24,6 +26,20 @@ public class InputHandler : MonoBehaviour
         inputActions.Player.Sprint.performed += OnSprint;
         inputActions.Player.Sprint.canceled += OnSprint;
         inputActions.Player.Jump.performed += OnJump;
+        inputActions.Player.Interaction.performed += OnInteraction;
+        inputActions.Player.Inventory.performed += OnInventory;
+    }
+    void OnDisable()
+    {
+        inputActions.Player.Move.performed -= OnMove;
+        inputActions.Player.Move.canceled -= OnMove;
+        inputActions.Player.Look.performed -= OnLook;
+        inputActions.Player.Look.canceled -= OnLook;
+        inputActions.Player.Sprint.performed -= OnSprint;
+        inputActions.Player.Sprint.canceled -= OnSprint;
+        inputActions.Player.Jump.performed -= OnJump;
+        inputActions.Player.Interaction.performed -= OnInteraction;
+        inputActions.Player.Inventory.performed -= OnInventory;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -52,5 +68,15 @@ public class InputHandler : MonoBehaviour
             IsSprint = true;
         if (context.canceled)
             IsSprint = false;
+    }
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            onInteractionAction?.Invoke();
+    }
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            onInventoryAction?.Invoke();
     }
 }
