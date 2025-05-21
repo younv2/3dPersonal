@@ -18,7 +18,7 @@ public class MovePlatform : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(TagString.Player))
         {
             collision.transform.SetParent(this.transform);
         }
@@ -26,7 +26,7 @@ public class MovePlatform : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag(TagString.Player))
         {
             collision.transform.SetParent(null);
         }
