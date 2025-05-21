@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour
     public Action onJumpAction;
     public Action onInteractionAction;
     public Action onInventoryAction;
+    public Action onChangeCameraAction;
     private void Awake()
     {
         inputActions = new PlayerInput();
@@ -28,6 +29,7 @@ public class InputHandler : MonoBehaviour
         inputActions.Player.Jump.performed += OnJump;
         inputActions.Player.Interaction.performed += OnInteraction;
         inputActions.Player.Inventory.performed += OnInventory;
+        inputActions.Player.ChangeCamera.performed += OnChangeCamera;
     }
     void OnDisable()
     {
@@ -40,6 +42,7 @@ public class InputHandler : MonoBehaviour
         inputActions.Player.Jump.performed -= OnJump;
         inputActions.Player.Interaction.performed -= OnInteraction;
         inputActions.Player.Inventory.performed -= OnInventory;
+        inputActions.Player.ChangeCamera.performed -= OnChangeCamera;
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -78,5 +81,10 @@ public class InputHandler : MonoBehaviour
     {
         if (context.performed)
             onInventoryAction?.Invoke();
+    }
+    public void OnChangeCamera(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            onChangeCameraAction?.Invoke();
     }
 }

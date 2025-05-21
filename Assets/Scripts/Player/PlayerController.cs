@@ -5,7 +5,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     private Vector2 moveInput;
     [Header("Look")]
-    public Transform CameraContainer;
+    public Transform cameraContainer;
+    public Transform tpCameraContainer;
+    private bool isTp = false;
     public float minXLook;
     public float maxXLook;
     private float camCurXRot;
@@ -37,12 +39,14 @@ public class PlayerController : MonoBehaviour
         inputHandler.onJumpAction += Jump;
         inputHandler.onInteractionAction += interaction.OnInteractInput;
         inputHandler.onInventoryAction += ToggleCursor;
+        inputHandler.onChangeCameraAction += ChangeCamera;
     }
     private void OnDisable()
     {
         inputHandler.onJumpAction -= Jump;
         inputHandler.onInteractionAction -= interaction.OnInteractInput;
         inputHandler.onInventoryAction -= ToggleCursor;
+        inputHandler.onChangeCameraAction -= ChangeCamera;
     }
     private void FixedUpdate()
     {
@@ -71,11 +75,28 @@ public class PlayerController : MonoBehaviour
     {
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
-        CameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
-
+        if(!isTp)
+            cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
+        else
+            tpCameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
-    
+    public void ChangeCamera()
+    {
+        if(isTp)
+        {
+            tpCameraContainer.gameObject.SetActive(false);
+            cameraContainer.gameObject.SetActive(true);
+            isTp = false;
+        }
+        else
+        {
+            cameraContainer.gameObject.SetActive(false);
+            tpCameraContainer.gameObject.SetActive(true);
+            isTp = true;
+        }
+        
+    }
 
     public void Jump()
     {
