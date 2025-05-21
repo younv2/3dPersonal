@@ -5,7 +5,7 @@
 ## 작업 인원
 1인
 ---
-<br>
+
 ## 게임설명
 ### How To Play
 Move - WASD
