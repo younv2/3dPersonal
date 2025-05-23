@@ -1,7 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// 인벤토리 UI
+/// </summary>
 public class UIInventory : MonoBehaviour
 {
     public ItemSlot[] slots;
@@ -28,7 +30,7 @@ public class UIInventory : MonoBehaviour
 
     int curEquipIndex;
 
-    // Start is called before the first frame update
+    // 인벤토리 초기 세팅
     private void Start()
     {
         Player player = CharacterManager.Instance.player;
@@ -52,12 +54,16 @@ public class UIInventory : MonoBehaviour
         equipButton.GetComponent<Button>().onClick.AddListener(() => OnEquipButton());
         unequipButton.GetComponent<Button>().onClick.AddListener(() => OnUnEquipButton());
     }
+    //이벤트 삭제
     private void OnDestroy()
     {
         controller.InputHandler.onInventoryAction -= Toggle;
         if(CharacterManager.Instance!=null)
         CharacterManager.Instance.player.OnAddItem -= AddItem;
     }
+    /// <summary>
+    /// 아이템 창 정리
+    /// </summary>
     private void ClearSelectedItemWindow()
     {
         selectedItemName.text = string.Empty;
@@ -70,6 +76,9 @@ public class UIInventory : MonoBehaviour
         unequipButton.SetActive(false);
         dropButton.SetActive(false);
     }
+    /// <summary>
+    /// 아이템 창 활성화 토글
+    /// </summary>
     public void Toggle()
     {
         if (IsOpen())
@@ -81,11 +90,17 @@ public class UIInventory : MonoBehaviour
             inventoryWindow.SetActive(true);
         }
     }
+    /// <summary>
+    /// 아이템 창 열려있는지 확인하는 함수
+    /// </summary>
+    /// <returns></returns>
     public bool IsOpen()
     {
         return inventoryWindow.activeInHierarchy;
     }
-
+    /// <summary>
+    /// 아이템 추가 함수
+    /// </summary>
     private void AddItem()
     {
         ItemData data = CharacterManager.Instance.player.itemData;
@@ -113,7 +128,9 @@ public class UIInventory : MonoBehaviour
         ThrowItem(data);
         CharacterManager.Instance.player.itemData = null;
     }
-
+    /// <summary>
+    /// UI를 업데이트 해주는 함수
+    /// </summary>
     private void UpdateUI()
     {
         for (int i = 0; i < slots.Length; i++)
@@ -128,7 +145,11 @@ public class UIInventory : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// 아이템 스택 함수
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     private ItemSlot GetItemStack(ItemData data)
     {
         for (int i = 0; i < slots.Length; i++)
@@ -140,7 +161,10 @@ public class UIInventory : MonoBehaviour
         }
         return null;
     }
-
+    /// <summary>
+    /// 비어있는 슬롯을 받아오는 함수
+    /// </summary>
+    /// <returns></returns>
     private ItemSlot GetEmptySlot()
     {
         for(int i =0; i<slots.Length;i++)
@@ -152,11 +176,18 @@ public class UIInventory : MonoBehaviour
         }
         return null;
     }
+    /// <summary>
+    /// 아이템 버리기
+    /// </summary>
+    /// <param name="data"></param>
     private void ThrowItem(ItemData data)
     {
         Instantiate(data.dropPrefab,dropPosition.position,Quaternion.Euler(Vector3.one * UnityEngine.Random.value * 360));
     }
-
+    /// <summary>
+    /// 아이템 선택
+    /// </summary>
+    /// <param name="index"></param>
     public void SelectedItem(int index)
     {
         if (slots[index].item == null) return;
@@ -182,7 +213,9 @@ public class UIInventory : MonoBehaviour
         dropButton.SetActive(true);
 
     }
-
+    /// <summary>
+    /// 아이템 사용 이벤트
+    /// </summary>
     public void OnUseButton()
     {
         if (selectedItem.type == ItemType.Consumable)
@@ -194,11 +227,17 @@ public class UIInventory : MonoBehaviour
             RemoveSelectedItem();
         }
     }
+    /// <summary>
+    /// 아이템 드롭 이벤트
+    /// </summary>
     public void OnDropButton()
     {
         ThrowItem(selectedItem);
         RemoveSelectedItem();
     }
+    /// <summary>
+    /// 선택 아이템 삭제
+    /// </summary>
     void RemoveSelectedItem()
     {
         slots[selectedItemIndex].quantity--;
@@ -211,7 +250,9 @@ public class UIInventory : MonoBehaviour
         }
         UpdateUI();
     }
-
+    /// <summary>
+    /// 아이템 장착 이벤트
+    /// </summary>
     public void OnEquipButton()
     {
         if (slots[curEquipIndex].equipped)
@@ -236,7 +277,10 @@ public class UIInventory : MonoBehaviour
 
         SelectedItem(selectedItemIndex);
     }
-
+    /// <summary>
+    /// 아이템 장착해제
+    /// </summary>
+    /// <param name="index"></param>
     void UnEquip(int index)
     {
         slots[index].equipped = false;
@@ -261,6 +305,9 @@ public class UIInventory : MonoBehaviour
             SelectedItem(selectedItemIndex);
         }
     }
+    /// <summary>
+    /// 아이템 장착 해제 이벤트
+    /// </summary>
     public void OnUnEquipButton()
     {
         UnEquip(selectedItemIndex);

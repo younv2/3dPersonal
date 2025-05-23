@@ -1,6 +1,8 @@
 ﻿using TMPro;
 using UnityEngine;
-
+/// <summary>
+/// 상호작용 클래스
+/// </summary>
 public class Interaction : MonoBehaviour
 {
     public float checkRate = 0.05f;
@@ -46,13 +48,17 @@ public class Interaction : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// 프롬프트 텍스트 세팅
+    /// </summary>
     private void SetPromptText()
     {
         promptText.gameObject.SetActive(true);
         promptText.text = curInteractable.GetInteractPrompt();
     }
-
+    /// <summary>
+    /// 상호작용 입력 들어왔을때 이벤트 함수
+    /// </summary>
     public void OnInteractInput()
     {
         if (curInteractable == null || curInteractGameObject == null)

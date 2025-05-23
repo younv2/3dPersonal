@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 발사대
+/// </summary>
 public class ShootPlatform : MonoBehaviour
 {
     private float waitTime = 1f;
@@ -21,10 +24,16 @@ public class ShootPlatform : MonoBehaviour
             StopCoroutine(coroutine);
         }
     }
+    /// <summary>
+    /// 일정 시간이 지난후 발사하도록 하는 코루틴
+    /// </summary>
+    /// <param name="rb"></param>
+    /// <returns></returns>
     IEnumerator Shoot(Rigidbody rb)
     {
         yield return new WaitForSeconds(waitTime);
 
         rb.AddForce(Vector3.up * shootPower, ForceMode.Impulse);
+        SoundManager.Instance.PlaySound(SoundType.SFX, "Shoot");
     }
 }

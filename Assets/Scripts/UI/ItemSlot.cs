@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ItemSlot 클래스
+/// </summary>
 public class ItemSlot : MonoBehaviour
 {
     public ItemData item;
@@ -29,6 +32,9 @@ public class ItemSlot : MonoBehaviour
     {
         outline.enabled = equipped;
     }
+    /// <summary>
+    /// 아이템 슬롯 아이템 데이터에 맞게 초기 세팅
+    /// </summary>
     public void Set()
     {
         icon.gameObject.SetActive(true);
@@ -40,12 +46,18 @@ public class ItemSlot : MonoBehaviour
             outline.enabled = equipped;
         }
     }
+    /// <summary>
+    /// 아이템 슬롯 초기화
+    /// </summary>
     public void Clear()
     {
         item = null;
         icon.gameObject.SetActive(false);
         quantityText.text = string.Empty;
     }
+    /// <summary>
+    /// 슬롯 클릭 이벤트
+    /// </summary>
     public void OnClickButton()
     {
         inventory.SelectedItem(index);

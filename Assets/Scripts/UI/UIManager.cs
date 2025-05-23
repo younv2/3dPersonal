@@ -1,4 +1,7 @@
 using UnityEngine;
+/// <summary>
+/// UI¸Å´ÏÀú
+/// </summary>
 public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private HpBar hpBar;

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 플레이어 컨트롤러 클래스 - 플레이어 행동 관리
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
@@ -63,7 +66,9 @@ public class PlayerController : MonoBehaviour
         if(canLook)
             CameraLook();
     }
-
+    /// <summary>
+    /// 플레이어 움직임
+    /// </summary>
     public void Move()
     {
         Vector3 dir = transform.forward * moveInput.y + transform.right * moveInput.x;
@@ -74,7 +79,9 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward*1f, Color.red);
         
     }
-
+    /// <summary>
+    /// 플레이어 벽 등반
+    /// </summary>
     public void Climb()
     {
         if (Physics.Raycast(transform.position, transform.forward, out var hit, 1f, LayerMask.GetMask(LayerString.Wall)))
@@ -96,6 +103,9 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up * 5f, ForceMode.Impulse);
     }
+    /// <summary>
+    /// 플레이어 카메라 이동
+    /// </summary>
     public void CameraLook()
     {
         camCurXRot += mouseDelta.y * lookSensitivity;
@@ -106,6 +116,9 @@ public class PlayerController : MonoBehaviour
             tpCameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
+    /// <summary>
+    /// 플레이어 시점 변경
+    /// </summary>
     public void ChangeCamera()
     {
         if(isTp)
@@ -122,7 +135,9 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-
+    /// <summary>
+    /// 플레이어 점프
+    /// </summary>
     public void Jump()
     {
         bool isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, LayerMask.GetMask(LayerString.Ground));
@@ -144,11 +159,17 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * stat.JumpPower, ForceMode.Impulse);
         jumpCount++;
     }
-
+    /// <summary>
+    /// 플레이어 초기 세팅
+    /// </summary>
+    /// <param name="playerStat"></param>
     internal void Init(PlayerStat playerStat)
     {
         stat = playerStat;
     }
+    /// <summary>
+    /// 플레이어 커서 모드 변경
+    /// </summary>
     private void ToggleCursor()
     {
         bool toggle = Cursor.lockState == CursorLockMode.Locked;

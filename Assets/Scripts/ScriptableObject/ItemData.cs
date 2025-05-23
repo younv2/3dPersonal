@@ -1,17 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum ItemType
-{
-    Equipable,Consumable,Resource
-}
-public enum ConsumableType
-{
-    Health,
-    Stamina,
-    MoveSpeed,
-    JumpCount
-}
+
 [Serializable]
 public class ItemDataConsumable
 {
@@ -20,7 +10,9 @@ public class ItemDataConsumable
     public ConsumableType type;
     public float value;
 }
-
+/// <summary>
+/// 아이템 데이터를 저장하는 SO
+/// </summary>
 [CreateAssetMenu(fileName ="Item",menuName = "New Item")]
 public class ItemData : ScriptableObject
 {

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// 레이저 트랩
+/// </summary>
 public class LaserTrap : MonoBehaviour
 {
     [SerializeField] private Transform transform;

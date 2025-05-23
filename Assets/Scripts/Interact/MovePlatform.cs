@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// 움직이는 플랫폼
+/// </summary>
 public class MovePlatform : MonoBehaviour
 {
     [SerializeField] private Vector3 min;
@@ -31,6 +34,10 @@ public class MovePlatform : MonoBehaviour
             collision.transform.SetParent(null);
         }
     }
+    /// <summary>
+    /// 있는 위치에 맞춰 움직이게 하는 코루틴
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Move()
     {
         while (true)

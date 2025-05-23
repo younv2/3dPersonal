@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
-
+/// <summary>
+/// 플레이어 클래스(플레이어 총괄 관리)
+/// </summary>
 public class Player : MonoBehaviour
 {
     public PlayerController controller;

@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// ¿Â∫Ò
+/// </summary>
 public class Equipment : MonoBehaviour
 {
     public ItemData curEquip;
